@@ -1,0 +1,22 @@
+[project]
+name = "time-series-library"
+version = "0.0.1"
+description = "Time-Series-Library for application"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "einops>=0.8.1",
+    "local-attention>=1.11.1",
+    "matplotlib>=3.10.3",
+    "numpy>=2.3.0",
+    "pandas>=2.3.0",
+    "scikit-learn>=1.7.0",
+    "scipy>=1.15.3",
+    "tqdm>=4.67.1",
+]
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+default = true
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
