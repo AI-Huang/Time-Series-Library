@@ -1,3 +1,4 @@
+from functools import partial
 from tslib.data_provider.data_loader import (
     Dataset_ETT_hour,
     Dataset_ETT_minute,
@@ -29,8 +30,12 @@ data_dict = {
 }
 
 
-def data_provider(args, flag):
-    Data = data_dict[args.data]
+def data_provider(args, flag, DataCls=None):
+    if DataCls is None:
+        Data = data_dict[args.data]
+    else:
+        Data = DataCls
+
     timeenc = 0 if args.embed != "timeF" else 1
 
     shuffle_flag = False if (flag == "test" or flag == "TEST") else True
@@ -69,7 +74,7 @@ def data_provider(args, flag):
             shuffle=shuffle_flag,
             num_workers=args.num_workers,
             drop_last=drop_last,
-            collate_fn=lambda x: collate_fn(x, max_len=args.seq_len),
+            collate_fn=partial(collate_fn, max_len=args.seq_len),
         )
         return data_set, data_loader
     else:

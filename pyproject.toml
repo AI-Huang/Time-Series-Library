@@ -1,5 +1,5 @@
 [project]
-name = "time-series-library"
+name = "tslib"
 version = "0.0.1"
 description = "Time-Series-Library for application"
 readme = "README.md"
@@ -8,15 +8,23 @@ dependencies = [
     "einops>=0.8.1",
     "local-attention>=1.11.1",
     "matplotlib>=3.10.3",
-    "numpy>=2.3.0",
-    "pandas>=2.3.0",
-    "scikit-learn>=1.7.0",
+    "numpy>=2.2.6",
+    "pandas>=2.2.3",
+    "scikit-learn>=0.24",
     "scipy>=1.15.3",
     "tqdm>=4.67.1",
 ]
+
 [[tool.uv.index]]
 url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 default = true
+
 [build-system]
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0"
+]

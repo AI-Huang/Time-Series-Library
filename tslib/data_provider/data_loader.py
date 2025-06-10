@@ -734,15 +734,18 @@ class UEAloader(Dataset):
         labels = self.labels_df.loc[self.all_IDs[ind]].values
         if self.flag == "TRAIN" and self.args.augmentation_ratio > 0:
             num_samples = len(self.all_IDs)
-            num_columns = self.feature_df.shape[1]
+            num_columns = self.num_columns
             seq_len = int(self.feature_df.shape[0] / num_samples)
-            batch_x = batch_x.reshape((1, seq_len, num_columns))
-            batch_x, labels, augmentation_tags = run_augmentation_single(batch_x, labels, self.args)
+            # batch_x = batch_x.reshape((1, seq_len, num_columns))
+            batch_x.reshape((1, -1, num_columns))  # fix
+            batch_x, labels, augmentation_tags = run_augmentation_single(
+                batch_x, labels, self.args
+            )
 
-            batch_x = batch_x.reshape((1 * seq_len, num_columns))
+            # batch_x = batch_x.reshape((1 * seq_len, num_columns))
+            batch_x = batch_x.reshape((-1, num_columns))
 
-        return self.instance_norm(torch.from_numpy(batch_x)), \
-               torch.from_numpy(labels)
+        return self.instance_norm(torch.from_numpy(batch_x)), torch.from_numpy(labels)
 
     def __len__(self):
         return len(self.all_IDs)
